@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import matplotlib as plt
 
 #INPUT DATA
 budget = 2000000
@@ -58,9 +59,10 @@ df = df.assign(flight_weeks = lambda x: df.on_air_weeks_per_flight + df.off_air_
 
 #adding 'Full Flights' column
 df = df.assign(full_flights = lambda x: periods//df.flight_weeks)
+print(df)
 
 #adding 'On Air Weeks Total' column
-df = df.assign(on_air_weeks_total = lambda x: (df.full_flights * df.on_air_weeks_per_flight + min(df.on_air_weeks_per_flight | periods % df.flight_weeks)))
+df = df.assign(on_air_weeks_total = lambda x: (df.full_flights * df.on_air_weeks_per_flight + min(df.on_air_weeks_per_flight.iloc[-1], periods % df.flight_weeks.iloc[-1])))
 
 #adding 'GPRs per Week' column
 df = df.assign(gprs_per_week = lambda x: df.grps_total / df.on_air_weeks_total)
@@ -90,4 +92,4 @@ for k in range(max_touchpoint):
         if algorithm_step2_df.iat[k, l] <= df.on_air_weeks_per_flight.loc[k+1]:
             output_df.loc[k+1] = df.gprs_per_week.loc[k+1]
         else: output_df.loc[k+1] = 0
-print(df.first(1))
+graph = output_df.plot.bar()
