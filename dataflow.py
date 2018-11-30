@@ -27,8 +27,8 @@ df.set_index('touchpoint', inplace = True)
 #print(df)
 
 #adding 'Rand' column
-#df = df.assign(rand = lambda x: np.random.random(size = 6))
-df = df.assign(rand = lambda x: [0.86, 0.89, 0.81, 0.68, 0.43, 0.22])
+df = df.assign(rand = lambda x: np.random.random(size = 6))
+#df = df.assign(rand = lambda x: [0.86, 0.89, 0.81, 0.68, 0.43, 0.22])
 
 #adding 'Share of Budget' column
 sum_rand_col = df.rand.sum()
@@ -47,12 +47,12 @@ df = df.assign(grps_total = lambda x: df.budget/df.cpp)
 sum_grps_total_col = df.grps_total.sum()
 
 #adding 'On Air Weeks per Flight' column
-#df = df.assign(on_air_weeks_per_flight = lambda x: np.random.choice(range(min_on_air, max_on_air + 1), size = 6))
-df = df.assign(on_air_weeks_per_flight = lambda x: [3, 2, 2, 4, 4, 2])
+df = df.assign(on_air_weeks_per_flight = lambda x: np.random.choice(range(min_on_air, max_on_air + 1), size = 6))
+#df = df.assign(on_air_weeks_per_flight = lambda x: [3, 2, 2, 4, 4, 2])
 
 #adding 'Off Air Weeks Per Flight' column
-#df = df.assign(off_air_weeks_per_flight = lambda x: np.random.choice(range(min_off_air, max_off_air + 1), size = 6))
-df = df.assign(off_air_weeks_per_flight = lambda x: 6*[3])
+df = df.assign(off_air_weeks_per_flight = lambda x: np.random.choice(range(min_off_air, max_off_air + 1), size = 6))
+#df = df.assign(off_air_weeks_per_flight = lambda x: 6*[3])
 
 #adding 'Flight Weeks' column
 df = df.assign(flight_weeks = lambda x: df.on_air_weeks_per_flight + df.off_air_weeks_per_flight)
